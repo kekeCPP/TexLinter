@@ -4,4 +4,5 @@ WORKDIR /app
 
 COPY . /app
 
-CMD ["python", "./main.py"]
+# ENTRYPOINT [ "executable" ]
+# CMD ["python", "./main.py"]

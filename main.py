@@ -16,7 +16,7 @@ def main():
 
             if (not os.path.exists(args.newfile)):
                 with open(args.newfile, "w") as new_file:
-                    new_file.write("some new text")
+                    new_file.write(text)
             else: print("Error: A file with that name already exists!")
     else:
         if (os.path.exists(args.file_path)):
