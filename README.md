@@ -2,7 +2,8 @@
 
 
 <h2>Build the image</h2>
-<p>1. Make sure you have docker installed and from a terminal navigate to the folder where the Dockerfile is. Now run the command:     "docker build -t texlinter ."</p>
+<p>1. Make sure you have docker installed. Download the files from this repo and navigate to the folder from a terminal. Now run the command:     
+  "docker build -t texlinter ."</p>
 
 
 <h2>Start a container from the image</h2>
