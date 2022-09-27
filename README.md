@@ -6,7 +6,7 @@
 
 <h2>Use the program</h2>
 <p>3. If you wish to format a file and save it as a new file make sure you are in the /app directory and run the command: 
-"python main.py ./tex/<file to be formatted> -n ./tex/<new file>"
+"python main.py ./tex/[file to be formatted] -n ./tex/[new file]"
 
 If you wish to format a file and override the old file make sure you are in the /app directory and run the command:
-"python main.py ./tex/<file to be formatted>"</p>
+"python main.py ./tex/[file to be formatted]"</p>
