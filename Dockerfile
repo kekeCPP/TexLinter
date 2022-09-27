@@ -1,8 +1,17 @@
 FROM python:3.10
 
-WORKDIR /app
+# RUN useradd --create-home --shell /bin/bash temp_user
+RUN useradd --create-home temp_user
 
-COPY . /app
+WORKDIR /home/app
 
-# ENTRYPOINT [ "executable" ]
-# CMD ["python", "./main.py"]
+# COPY requirements.txt
+
+# RUN pip install --no-cache-dir -r requirements.txt
+
+USER temp_user
+
+COPY . .
+
+# ENTRYPOINT [ "./app/main.py" ]
+CMD ["bash"]

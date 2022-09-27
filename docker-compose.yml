@@ -1,0 +1,8 @@
+version: "3.10"
+services:
+  app:
+    build: .
+    image: texlinter
+    volumes: [C://users/hampu/desktop:/home/app/tex]
+    stdin_open: true
+    tty: true
