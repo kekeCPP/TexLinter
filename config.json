@@ -1,3 +1,4 @@
 {
-    "newline-after-sentence" : true
+    "newline-after-sentence" : true,
+    "space-after-comment" : true
 }
