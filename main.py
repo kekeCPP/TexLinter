@@ -16,27 +16,26 @@ args = parser.parse_args()
 def add_newline_after_sentence(text):
     """Function to format text to add a new line after each sentence"""
 
-    # Split the text to seperate tags and text
-    split_text = re.split(r"([\\{}])", text)
-
-    # Check if we are inside of a \section tag
+    # split the text into sections
+    split_text = re.split(r"(\\section)", text)
     i = 0
     while i < len(split_text):
-        if (split_text[i] == "section" and split_text[i - 1] == "\\"):
-            # Split the text for every sentence
-            paragraph = re.split(r"((?<=[.!?])|(?<=[.!?]\")) +(?=[A-Z])", split_text[i + 4])
-
-            # Add a new line after every sentence
+        if split_text[i] == "\\section":
+            # split the section for every sentence
+            sentences = re.split(r"((?<=[.!?])|(?<=[.!?]\")) +(?=[A-Z])", split_text[i + 1])
+            sentences = list(filter(None, sentences))
+            new_sentences = []
             j = 0
-            paragraph_string = ""
-            while j < len(paragraph):
-                if paragraph[j] != "":
-                    last_letter = paragraph[j][len(paragraph[j]) - 1]
-                if (last_letter == "." or last_letter == "?" or last_letter == "!"):
-                    paragraph.insert(j + 1, r"\\ ")
-                paragraph_string = paragraph_string + paragraph[j]
+            # add a line break after each sentence if it doesn't already have one,
+            # join the list to one string and then add it to the split_text list
+            while j < len(sentences):
+                new_sentences.append(sentences[j])
+                last_letter = new_sentences[j][len(new_sentences[j]) - 1]
+                if last_letter != r"\\\\":
+                    new_sentences.append(r"\\ ")
                 j = j + 1
-            split_text[i + 4] = paragraph_string
+            new_sentences = "".join(new_sentences)
+            split_text[i + 1] = new_sentences
         i = i + 1
 
     # Change the text variable to match the newly formatted text
@@ -66,6 +65,48 @@ def add_space_after_comment(text):
     return text
 
 
+def add_lines_before_section(text, amount):
+    """Function that adds <amount> of blank lines before a section or chapter"""
+    # split_text = re.split(r"(\\\\\n|\\\\|\\|[{}])", text)
+    # split_text = re.split(r"([\\{}])", text)
+    # split_text = list(filter(None, split_text))
+    # text = ""
+    # i = 0
+    # print(split_text)
+    # while i < len(split_text):
+    #     if (split_text[i] == "section" and split_text[i - 1] == "\\"):
+    #         j = 2
+    #         while (j / 2) <= amount:
+    #             if split_text[i - j] != "\n" and split_text[i - j] != r"\vspace{\baselineskip}":
+    #             # if split_text[i - j] != "\vspace{\baselineskip}":
+    #                 split_text.insert((i - j) + 1 + (j - 2), "\n")
+    #                 split_text.insert((i - j) + 1 + (j - 2), r"\vspace{\baselineskip}")
+    #             j = j + 2
+    #     i = i + 1
+
+    split_text = re.split(r"(\\section|\n)", text)
+    split_text = list(filter(None, split_text))
+    i = 0
+    text = ""
+    while i < len(split_text):
+        if split_text[i] == r"(\\section)":
+            j = 1
+            count = 0
+            while count <= amount:
+                if split_text[i - j] != "\n":
+                    split_text.insert(i - j)
+                count = count + 1
+                # split_text.insert((i - j) + 1 + (j - 1), "\n")
+                # split_text.insert((i - j) + 1 + (j - 1), r"\vspace{\baselineskip}")
+                j = j + 1
+        i = i + 1
+    print(split_text)
+
+    for par in split_text:
+        text = text + par
+
+    return text
+
 def format_text(text):
     """Function that reads the config settings and calls all format functions"""
 
@@ -85,6 +126,8 @@ def format_text(text):
     # Call the function that adds a space after every comment sign
     if space_after_comment:
         text = add_space_after_comment(text)
+
+    text = add_lines_before_section(text, 5)
 
     # Return the formated text
     return text
