@@ -26,13 +26,15 @@ def add_newline_after_sentence(text):
             sentences = list(filter(None, sentences))
             new_sentences = []
             j = 0
-            # add a line break after each sentence if it doesn't already have one,
-            # join the list to one string and then add it to the split_text list
+            # add a line break after each sentence, join the list to one string
+            # and then add it to the split_text list
             while j < len(sentences):
                 new_sentences.append(sentences[j])
-                last_letter = new_sentences[j][len(new_sentences[j]) - 1]
-                if last_letter != r"\\\\":
-                    new_sentences.append(r"\\ ")
+                # if we are not on the last sentence in the section
+                if j < len(sentences) - 1:
+                    last_letter = new_sentences[j][len(new_sentences[j]) - 1]
+                    if last_letter != r"\\\\":
+                        new_sentences.append(r"\\ ")
                 j = j + 1
             new_sentences = "".join(new_sentences)
             split_text[i + 1] = new_sentences
