@@ -4,14 +4,6 @@ import os
 import re
 import json
 
-parser = argparse.ArgumentParser(description="Argument list")
-
-parser.add_argument("file_path", help = "path to the file you wish to format")
-parser.add_argument("-n", "--newfile", required = False,
-help = "save as a new file at specified path")
-
-args = parser.parse_args()
-
 
 def add_newline_after_sentence(text):
     """Function to format text to add a new line after each sentence"""
@@ -33,8 +25,8 @@ def add_newline_after_sentence(text):
                 # if we are not on the last sentence in the section
                 if j < len(sentences) - 1:
                     last_letter = new_sentences[j][len(new_sentences[j]) - 1]
-                    if last_letter != r"\\\\":
-                        new_sentences.append(r"\\ ")
+                    if last_letter != r"\n":
+                        new_sentences.append(r"\r\n")
                 j = j + 1
             new_sentences = "".join(new_sentences)
             split_text[i + 1] = new_sentences
@@ -137,6 +129,13 @@ def format_text(text):
 
 def main():
     """Main function"""
+    parser = argparse.ArgumentParser(description="Argument list")
+
+    parser.add_argument("file_path", help = "path to the file you wish to format")
+    parser.add_argument("-n", "--newfile", required = False,
+    help = "save as a new file at specified path")
+
+    args = parser.parse_args()
 
     if args.newfile:
         if os.path.exists(args.file_path):
