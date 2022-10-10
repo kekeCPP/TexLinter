@@ -26,7 +26,7 @@ def add_newline_after_sentence(text):
                 if j < len(sentences) - 1:
                     last_letter = new_sentences[j][len(new_sentences[j]) - 1]
                     if last_letter != r"\n":
-                        new_sentences.append(r"\r\n")
+                        new_sentences.append("\r\n")
                 j = j + 1
             new_sentences = "".join(new_sentences)
             split_text[i + 1] = new_sentences
