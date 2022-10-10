@@ -3,7 +3,7 @@ import argparse
 import os
 import re
 import json
-
+import sys
 
 def add_newline_after_sentence(text):
     """Function to format text to add a new line after each sentence"""
@@ -25,7 +25,7 @@ def add_newline_after_sentence(text):
                 # if we are not on the last sentence in the section
                 if j < len(sentences) - 1:
                     last_letter = new_sentences[j][len(new_sentences[j]) - 1]
-                    if last_letter != r"\n":
+                    if last_letter != "\n":
                         new_sentences.append("\r\n")
                 j = j + 1
             new_sentences = "".join(new_sentences)
@@ -124,6 +124,12 @@ def format_text(text):
 
     # Call the function that adds blank lines before each section and chapter
     text = add_lines_before_section(text, blank_lines_before_section)
+
+    # Change type of linebreak based on operating system
+    if sys.platform != "win32":
+        windows_linebreak = "\r\n"
+        unix_linebreak = "\n"
+        text = text.replace(windows_linebreak, unix_linebreak)
 
     # Return the formated text
     return text
