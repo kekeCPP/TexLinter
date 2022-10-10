@@ -56,6 +56,7 @@ def add_space_after_comment(text):
         text = text + split_text[i]
         i = i + 1
 
+    # Return the formated text
     return text
 
 
@@ -91,11 +92,13 @@ def add_lines_before_section(text, amount_of_lines):
 
         i = i + 1
 
+    # Change the text variable to match the newly formatted text
     text = ""
 
     for par in split_text:
         text = text + par
 
+    # Return the formated text
     return text
 
 def format_text(text):
