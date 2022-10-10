@@ -93,6 +93,7 @@ def format_text(text):
 
     newline_after_sentence = data["newline-after-sentence"]
     space_after_comment = data["space-after-comment"]
+    blank_lines_before_section = data["blank-lines-before-section"]
 
     cfg.close()
 
@@ -104,7 +105,8 @@ def format_text(text):
     if space_after_comment:
         text = add_space_after_comment(text)
 
-    text = add_lines_before_section(text, 5)
+    # Call the function that adds blank lines before each section and chapter
+    text = add_lines_before_section(text, blank_lines_before_section)
 
     # Return the formated text
     return text
