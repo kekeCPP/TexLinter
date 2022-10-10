@@ -80,12 +80,14 @@ def add_lines_before_section(text, amount_of_lines):
                 del split_text[i - j + 1]
                 j = j - 1
                 count = count - 1
+                i = i - 1
 
             # Add blank lines if there are less than wanted
             while count < amount_of_lines + 1:
                 split_text.insert(i - j + 1, "\n")
                 j = j + 1
                 count = count + 1
+                i = i + 1
 
         i = i + 1
 
