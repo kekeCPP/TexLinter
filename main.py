@@ -59,42 +59,25 @@ def add_space_after_comment(text):
     return text
 
 
-def add_lines_before_section(text, amount):
+def add_lines_before_section(text, amount_of_lines):
     """Function that adds <amount> of blank lines before a section or chapter"""
-    # split_text = re.split(r"(\\\\\n|\\\\|\\|[{}])", text)
-    # split_text = re.split(r"([\\{}])", text)
-    # split_text = list(filter(None, split_text))
-    # text = ""
-    # i = 0
-    # print(split_text)
-    # while i < len(split_text):
-    #     if (split_text[i] == "section" and split_text[i - 1] == "\\"):
-    #         j = 2
-    #         while (j / 2) <= amount:
-    #             if split_text[i - j] != "\n" and split_text[i - j] != r"\vspace{\baselineskip}":
-    #             # if split_text[i - j] != "\vspace{\baselineskip}":
-    #                 split_text.insert((i - j) + 1 + (j - 2), "\n")
-    #                 split_text.insert((i - j) + 1 + (j - 2), r"\vspace{\baselineskip}")
-    #             j = j + 2
-    #     i = i + 1
-
     split_text = re.split(r"(\\section|\n)", text)
     split_text = list(filter(None, split_text))
+
     i = 0
-    text = ""
     while i < len(split_text):
-        if split_text[i] == r"(\\section)":
+        if split_text[i] == "\\section":
+            print(split_text[i + 1])
             j = 1
             count = 0
-            while count <= amount:
+            while count < amount_of_lines + 1:
                 if split_text[i - j] != "\n":
-                    split_text.insert(i - j)
-                count = count + 1
-                # split_text.insert((i - j) + 1 + (j - 1), "\n")
-                # split_text.insert((i - j) + 1 + (j - 1), r"\vspace{\baselineskip}")
+                    split_text.insert(i - j + 1, "\n")
                 j = j + 1
+                count = count + 1
         i = i + 1
-    print(split_text)
+
+    text = ""
 
     for par in split_text:
         text = text + par
