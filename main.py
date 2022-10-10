@@ -25,7 +25,7 @@ def add_newline_after_sentence(text):
                 # if we are not on the last sentence in the section
                 if j < len(sentences) - 1:
                     last_letter = new_sentences[j][len(new_sentences[j]) - 1]
-                    if last_letter != "\n":
+                    if last_letter != r"\n":
                         new_sentences.append("\r\n")
                 j = j + 1
             new_sentences = "".join(new_sentences)
