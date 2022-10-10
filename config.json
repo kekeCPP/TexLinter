@@ -1,5 +1,5 @@
 {
     "newline-after-sentence" : true,
     "space-after-comment" : true,
-    "blank-lines-before-section" : 10
+    "blank-lines-before-section" : 5
 }

@@ -60,20 +60,33 @@ def add_space_after_comment(text):
 
 
 def add_lines_before_section(text, amount_of_lines):
-    """Function that adds <amount> of blank lines before a section or chapter"""
+    """Function that adds <amount_of_lines> of blank lines before a section or chapter"""
     split_text = re.split(r"(\\section|\n)", text)
     split_text = list(filter(None, split_text))
 
     i = 0
     while i < len(split_text):
         if split_text[i] == "\\section":
+
+            # Find the amount of blank lines already existing
             j = 1
             count = 0
+            while split_text[i - j] == "\n":
+                count = count + 1
+                j = j + 1
+
+            # Remove blank lines if there are more than wanted
+            while count > amount_of_lines + 1:
+                del split_text[i - j + 1]
+                j = j - 1
+                count = count - 1
+
+            # Add blank lines if there are less than wanted
             while count < amount_of_lines + 1:
-                if split_text[i - j] != "\n":
-                    split_text.insert(i - j + 1, "\n")
+                split_text.insert(i - j + 1, "\n")
                 j = j + 1
                 count = count + 1
+
         i = i + 1
 
     text = ""
