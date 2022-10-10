@@ -67,7 +67,6 @@ def add_lines_before_section(text, amount_of_lines):
     i = 0
     while i < len(split_text):
         if split_text[i] == "\\section":
-            print(split_text[i + 1])
             j = 1
             count = 0
             while count < amount_of_lines + 1:
