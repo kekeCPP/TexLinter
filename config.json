@@ -1,5 +1,6 @@
 {
     "newline-after-sentence" : true,
     "space-after-comment" : true,
-    "blank-lines-before-section" : 3
+    "blank-lines-before-section" : 3,
+    "add-indentations-to-environment-blocks": true
 }

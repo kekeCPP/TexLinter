@@ -103,50 +103,55 @@ def add_lines_before_section(text, amount_of_lines):
 
 def add_indentations(text):
     """Function that adds indentations for environmental blocks"""
-    split_text = re.split(r"(\\begin|\\end|[{}]|\n)", text)
+
+    # Split the text for the useful keywords and remove any instances
+    # of tabs or spaces aswell as empty elements
+    unfiltered_list = re.split(r"(\\begin|\\end|[{}]|\n)", text)
+    split_text = []
+
+    for element in unfiltered_list:
+        split_text.append(element.strip(" \t"))
+
     split_text = list(filter(None, split_text))
+
+
 
     tab_multiplier = 0
     i = 0
     while i < len(split_text):
+        # Add indentations and increase the amount of indentations for upcoming elements
         if split_text[i] == "\\begin":
+            k = 0
+            while k < tab_multiplier:
+                split_text.insert(i, "\t")
+                k = k + 1
+                i = i + 1
             tab_multiplier = tab_multiplier + 1
 
-        if split_text[i] == "\\end":
+        # Decrease the amount of indentations for upcoming elements and add indentations
+        elif split_text[i] == "\\end":
             tab_multiplier = tab_multiplier - 1
+            k = 0
+            while k < tab_multiplier:
+                split_text.insert(i, "\t")
+                k = k + 1
+                i = i + 1
 
-        if split_text[i] != "\n" and split_text[i - 1] == "\n":
-            if split_text[i] == "\\begin" or split_text[i] == "\\end":
-                k = 0
-                while k < tab_multiplier - 1:
-                    split_text.insert(i, "\t")
-                    k = k + 1
-            else:
+        else:
+            # Add indentations if the element is at the beginning of a new line
+            if split_text[i] != "\n" and split_text[i - 1] == "\n":
                 k = 0
                 while k < tab_multiplier:
                     split_text.insert(i, "\t")
                     k = k + 1
+                    i = i + 1
+
         i = i + 1
 
-
-    # while i < len(split_text):
-    #     if split_text[i] == "\\begin":
-    #         j = 1
-    #         tab_multiplier = 0
-    #         while split_text[i + j] != "\\end" and split_text[i + j + 2] != split_text[i + 2]:
-    #             if split_text[i + j] != "\n" and split_text[i + j] != "\t":
-    #                 if split_text[i + j - 1] == "\n" or split_text[i + j - 1] == "\t":
-    #                     if split_text[i + j] == "\\begin":
-    #                         tab_multiplier = tab_multiplier + 1
-    #                     split_text.insert(i + j, "\t")
-    #                     j = j + 1
-    #             j = j + 1
-    #         if tab_multiplier > 0:
-    #             split_text.insert(i + j, "\t")
-    #     i = i + 1
-
-    print(split_text)
+    # Change the text variable to match the newly formatted text
     text = "".join(split_text)
+
+    # Return the formated text
     return text
 
 
@@ -160,6 +165,7 @@ def format_text(text):
     newline_after_sentence = data["newline-after-sentence"]
     space_after_comment = data["space-after-comment"]
     blank_lines_before_section = data["blank-lines-before-section"]
+    add_indentations_to_environment_blocks = data["add-indentations-to-environment-blocks"]
 
     cfg.close()
 
@@ -175,8 +181,8 @@ def format_text(text):
     text = add_lines_before_section(text, blank_lines_before_section)
 
     # Call the function that adds indentations to environmental blocks
-    text = add_indentations(text)
-    print(text)
+    if add_indentations_to_environment_blocks:
+        text = add_indentations(text)
 
     # Change type of linebreak based on operating system
     if sys.platform != "win32":
