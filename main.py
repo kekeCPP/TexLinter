@@ -13,23 +13,27 @@ def add_newline_after_sentence(text):
     i = 0
     while i < len(split_text):
         if split_text[i] == "\\section":
+
             # split the section for every sentence
-            sentences = re.split(r"((?<=[.!?])|(?<=[.!?]\")) +(?=[A-Z])", split_text[i + 1])
-            sentences = list(filter(None, sentences))
-            new_sentences = []
-            j = 0
+            words = re.split(r"([ .?!])", split_text[i + 1])
+            words = list(filter(None, words))
+            titles = ["mr", "Mr", "ms", "Ms", "miss", "Miss", "dr", "Dr", "pr", "Pr"]
+
             # add a line break after each sentence, join the list to one string
-            # and then add it to the split_text list
-            while j < len(sentences):
-                new_sentences.append(sentences[j])
-                # if we are not on the last sentence in the section
-                if j < len(sentences) - 1:
-                    last_letter = new_sentences[j][len(new_sentences[j]) - 1]
-                    if last_letter != r"\n":
-                        new_sentences.append("\r\n")
+            j = 0
+            while j < len(words) - 1:
+                if words[j] == "." or words[j] == "?" or words[j] == "!":
+                    if all(words[j - 1] != title for title in titles):
+                        if words[j + 1] != "\n":
+                            if words[j + 1] == " ":
+                                # If first letter of the next word is
+                                # upper case we can add a newline
+                                if words[j + 2][0].isupper():
+                                    words[j + 1] = "\n"
                 j = j + 1
-            new_sentences = "".join(new_sentences)
-            split_text[i + 1] = new_sentences
+            words = "".join(words)
+            split_text[i + 1] = words
+
         i = i + 1
 
     # Change the text variable to match the newly formatted text
