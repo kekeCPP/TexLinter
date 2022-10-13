@@ -120,7 +120,7 @@ def add_indentations(text):
     i = 0
     while i < len(split_text):
         # Add indentations and increase the amount of indentations for upcoming elements
-        if split_text[i] == "\\begin":
+        if split_text[i] == "\\begin" and split_text[i + 2] != "document":
             k = 0
             while k < tab_multiplier:
                 split_text.insert(i, "\t")
@@ -129,7 +129,7 @@ def add_indentations(text):
             tab_multiplier = tab_multiplier + 1
 
         # Decrease the amount of indentations for upcoming elements and add indentations
-        elif split_text[i] == "\\end":
+        elif split_text[i] == "\\end" and split_text[i + 2] != "document":
             tab_multiplier = tab_multiplier - 1
             k = 0
             while k < tab_multiplier:
