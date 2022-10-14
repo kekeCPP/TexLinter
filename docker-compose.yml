@@ -1,6 +1,6 @@
 version: "3.10"
 services:
-  app:
+  zebralint:
     build: .
     image: texlinter
     # Change local path to whichever local directory you want to read the tex files from and also save them
