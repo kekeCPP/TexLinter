@@ -15,10 +15,6 @@ def add_newline_after_sentence(text):
             # split the section for every sentence
             words = re.split(r"([ .?!\n])", split_text[i + 1])
             words = list(filter(None, words))
-            # Remove any space from the list to make it easier to add new lines
-            for word in words:
-                if word == " ":
-                    words.remove(word)
 
             titles = ["mr", "Mr", "ms", "Ms", "miss", "Miss", "dr", "Dr", "pr", "Pr"]
 
@@ -28,30 +24,24 @@ def add_newline_after_sentence(text):
                 if words[j] == "." or words[j] == "?" or words[j] == "!":
                     if all(words[j - 1] != title for title in titles):
                         if words[j + 1] != "\n":
-                            # if words[j + 1] == " ":
+
+                            # Remove additional or trailing whitespaces
+                            k = 1
+                            while words[j + k] == " ":
+                                if words[j + k + 1] == "\n":
+                                    del words[j + k]
+                                    k = k - 1
+                                if k > 1:
+                                    del words[j + k]
+                                    k = k - 1
+                                k = k + 1
+
+                            if words[j + 1] == " ":
                                 # If first letter of the next word is
                                 # upper case we can add a newline
-                            if words[j + 1][0].isupper():
-                                words.insert(j + 1, "\n")
-                                j = j + 1
-                                # words[j + 1] = "\n"
-
-                            # Add a space after the dot after an abbreviation
-                            elif words[j + 1][0].islower() or words[j + 1][0].isdigit():
-                                if words[j - 1][len(words[j - 1]) - 1].isalpha():
-                                    words.insert(j + 1, " ")
-                                    j = j + 1
-                    # Add space instead of newline if last word was a title
-                    else:
-                        words.insert(j + 1, " ")
-                        j = j + 1
-                # Add spaces back between each word
-                elif j > 0 and j < len(words) - 2:
-                    if words[j + 1] != "." and words[j + 1] != "?" and words[j + 1] != "?":
-                        words.insert(j + 1, " ")
-                        j = j + 1
+                                if words[j + 2][0].isupper():
+                                    words[j + 1] = "\n"
                 j = j + 1
-            print(words)
             words = "".join(words)
             split_text[i + 1] = words
 
