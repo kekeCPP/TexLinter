@@ -92,7 +92,6 @@ class TestLinterRules(unittest.TestCase):
 
         text = re.split(r"(\\begin|\\end|[{}]|\n|\t)", text)
         text = list(filter(None, text))
-        print(text)
         # Make sure there are a correct number of indentations
         i = 0
         while i < len(text) - 1:
