@@ -99,11 +99,9 @@ class TestLinterRules(unittest.TestCase):
                 self.assertEqual(text[i - 1], "\t")
             if text[i] == "center2":
                 self.assertEqual(text[i - 1], "\t")
-                self.assertEqual(text[i - 2], "\t")
             if text[i] == "center3":
                 self.assertEqual(text[i - 1], "\t")
                 self.assertEqual(text[i - 2], "\t")
-                self.assertEqual(text[i - 3], "\t")
             i = i + 1
 
 if __name__ == "__main__":
