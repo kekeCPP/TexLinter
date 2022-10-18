@@ -1,12 +1,30 @@
-<h1>How to build the image, run the container and use the program.</h1>
+# How to build the image, run the container and use the program.
 
 
-<h2>Install and start the program</h2>
-<p>1. Make sure you have docker installed. Download the files from this repo and change the local directory in the docker-compose.yml to a local directory on your computer which has the .tex files you want to format. Now navigate to the folder from a terminal and run the command: "docker compose run --rm app"</p>
+## Install and start the program
 
-<h2>Use the program</h2>
-<p>3. If you wish to format a file and save it as a new file make sure you are in the /app directory and run the command: 
-"python main.py ./tex/[file to be formatted] -n ./tex/[new file]"
+1 Download the files from this repom navigate to the folder with the docker file and build the container by running the command
 
-If you wish to format a file and override the old file make sure you are in the /app directory and run the command:
-"python main.py ./tex/[file to be formatted]"</p>
+    docker compose build zebralint
+
+2 Change the path-to-local-folder in the docker-compose.yml to a local directory on your computer which has the .tex files you wish to format
+
+This is where you should edit:
+
+    volumes: [path-to-local-folder:/home/app/tex]
+
+
+
+3 To start the container run the command
+
+    docker compose run --rm zebralint
+
+## Use the program
+While inside the container you can format files and save them as new files by using the command
+
+    python zebralint.py ./tex/<file-to-be-formatted> -n ./tex/<new-file>
+
+You can also format the file and override the old file by using the command
+
+    python zebralint.py ./tex/<file-to-be-formatted>
+

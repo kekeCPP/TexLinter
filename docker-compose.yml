@@ -4,6 +4,6 @@ services:
     build: .
     image: texlinter
     # Change local path to whichever local directory you want to read the tex files from and also save them
-    volumes: [C://users/hampu/desktop/texdocs:/home/app/tex]
+    volumes: [path-to-local-folder:/home/app/tex]
     stdin_open: true
     tty: true
